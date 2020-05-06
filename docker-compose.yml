@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+
+  front:
+    image: ${CI_REGISTRY_IMAGE}/front:${CI_COMMIT_REF_SLUG}
+    networks:
+      - traefik_default
+    labels:
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:ai-made-ez.com"
+      - "traefik.frontend.redirect.entryPoint=https"
+      - "traefik.frontend.auth.basic.users=ima:$$apr1$$uZC1qLXj$$Q2j2tkSvTXsuPsY4WCz5F1"
+
+  back:
+    image: ${CI_REGISTRY_IMAGE}/back:${CI_COMMIT_REF_SLUG}
+    networks:
+      - traefik_default
+    labels:
+      - "traefik.port=5000"
+      - "traefik.api.frontend.rule=Host:ai-made-ez.com; PathPrefixStrip:/api/"
+      - "traefik.api.frontend.redirect.entryPoint=https"
+      - "traefik.swaggerui.frontend.rule=Host:swaggerui.ai-made-ez.com"
+      - "traefik.swaggerui.frontend.entrypoint=http"
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: bidon
+
+networks:
+  traefik_default:
+    external: true

@@ -1,0 +1,88 @@
+html, body {
+    max-height: 100%;
+}
+.mdl-layout__content {
+    width: 100%;
+    max-height: 100%;
+    /* overflow: hidden; */
+}
+main {
+    max-height: calc(100% - 67px);
+}
+.mdl-cell {
+    padding: 8px;
+    padding-bottom: 0;
+}
+.title-inline {
+    display: inline-block;
+}
+.mdl-grid-flex {
+    max-height: calc(100% - 124px);
+}
+.title {
+    margin: 16px -8px 0px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    border-bottom: 1px black solid;
+}
+#messages{
+    height: 380px;
+    max-height: 380px;
+    overflow-y: scroll;
+    margin: 0 -8px;
+    padding: 8px;
+}
+#propositions{
+    height: 380px;
+    max-height: 380px;
+    overflow-y: scroll;
+    margin: 0 -8px;
+    padding: 8px;
+}
+.client {
+    width: 50%;
+    border-radius: 15px 15px 15px 0px;
+    padding: 16px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    background-color: #DDD;
+}
+.assist {
+    width: 50%;
+    margin-left: calc(50% - 40px);
+    border-radius: 15px 15px 0px 15px;
+    margin-bottom: 8px;
+    padding: 16px;
+}
+.proposition{
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+}
+.proposition label {
+    float: right;
+    width: initial;
+}
+.proposition .mdl-checkbox__box-outline {
+    border-color: #ddd;
+}
+.proposition .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {
+    background: #ddd;
+}
+.proposition .mdl-checkbox.is-checked .mdl-checkbox__box-outline {
+    border-color: #ddd;
+}
+.mdl-chip {
+    height: 15px;
+    line-height: 15px;
+    vertical-align: super;
+    background-color: transparent;
+    font-weight: bold;
+}
+#logo{
+    height:64px;
+}
+.sentiment {
+    height: 32px;
+}

@@ -1,0 +1,32 @@
+{
+    "name": "LfPC Translate",
+    "version": "1.0",
+    "description": "Translate anything into LfPC",
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "activeTab",
+        "declarativeContent",
+        "storage"
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["jquery-3.4.1.min.js", "script.js"],
+        "css": ["script.css"],
+        "all_frames": true
+    }],
+    "web_accessible_resources": [
+        "img/*"
+    ],
+    "manifest_version": 2,
+    "icons": {
+        "16": "pictoLfPC.png",
+        "48": "pictoLfPC.png",
+        "128": "pictoLfPC.png"
+    }
+}

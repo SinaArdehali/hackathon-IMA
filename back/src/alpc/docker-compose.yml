@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  phonemizer:
+    build:
+      context: .
+      dockerfile: phonemizer.Dockerfile
+    volumes:
+      - .:/app
+    command:
+      - tail
+      - -f
+      - /dev/null

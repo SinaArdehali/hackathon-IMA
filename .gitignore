@@ -1,0 +1,4 @@
+__pycache__/
+*/__pycache/
+*.py[cod]
+back/assets

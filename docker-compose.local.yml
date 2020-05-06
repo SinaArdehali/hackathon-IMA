@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+  front:
+    build: ./front
+    volumes:
+      - ./front/:/usr/share/nginx/html
+    ports:
+      - 80:80
+  back:
+    build: ./back
+    volumes:
+      - ./back/:/app
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_ENV=development

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="index.css">
+
+    <title>Assist +</title>
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header mdl-layout--fixed-header">
+            <div class="mdl-layout__header-row">
+                <img src="logo_bis.png" id="logo"/>
+                <span class="mdl-layout__title">Assist +</span>
+            </div>
+        </header>
+        <main>
+            <div class="mdl-layout__content">
+                <div class="mdl-grid">
+                    <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+                        <h5 class="title-inline">Tendances</h5>
+                        <!-- <span>Note : <span>*</span><span>*</span><span>*</span><span>*</span><span>*</span></span> -->
+                        <span>Ressenti : <img class="sentiment" src="smile-beam-regular.svg"/></span>
+                        <!-- <span>Profil financier : <span>€</span><span>€</span><span>€</span></span> -->
+                    </div>
+                </div>
+                <div class="mdl-grid mdl-grid-flex">
+                    <div class="mdl-shadow--2dp mdl-cell mdl-cell--6-col">
+                        <h5 class="title">Conversation</h5>
+                        <div id="messages">
+                            <div class="client template message" style="display:none;">Bonjour....</div>
+                            <div style="display:none;" class="message assist mdl-color--primary mdl-color-text--primary-contrast template">Bonjour également !</div>
+                        </div>
+                    </div>
+                    <div class="mdl-shadow--2dp mdl-cell mdl-cell--6-col">
+                        <h5 class="title">Actions à mener - Assistance</h5>
+                        <div id="propositions">
+                            <div class="proposition mdl-shadow--2dp mdl-color--accent  mdl-color-text--primary-contrast template" style="display:none;">
+                                <b>Offre</b>
+                                <p>
+                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                                        <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input">
+                                    </label>
+                                    <span class="proposition_title">Hep là !</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <dialog class="mdl-dialog">
+        <h4 class="mdl-dialog__title">Données Assureurs</h4>
+        <div class="mdl-dialog__content">
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button close">Fermer</button>
+        </div>
+    </dialog>
+    <script>
+
+        var result = {
+            "text": [
+                "Thomas, Macif Assistance, bonjour ! Quel est votre problème ?\n",
+                "Bonjour ! Je viens de tomber en panne sur une route de campagne, ma voiture ne démarre plus et je dois absolument aller au mariage de ma soeur ! Qu est-ce que je peux faire ? Vous pouvez m aider s il vous plait ?\n",
+                "Ne vous inquiétez pas, vous allez arriver au mariage de votre soeur, j aurais besoin de quelques informations. Est-ce que vous ou des passagers sont blessés ? Est-ce que votre voiture redémarre ?\n",
+                "Non, je vais bien et je suis seule. Je roulais tranquillement et la voiture a fait une fumée blanche avant de s arrêter. Maintenant, je n arrive plus à la redémarrer et il n y a plus de fumée.\n",
+                "Ok, Pouvez vous me donnez l immatriculation de votre véhicule?\n",
+                "Oui, un instant... Mon immatriculation est le EH 389 KW.\n",
+                "Pouvez vous me donner votre date de naissance ?\n",
+                "Je suis née le 21 mars 1990\n",
+                "Votre véhicule est bien une Renault Clio II ?\n",
+                "Oui, c est bien ça !\n",
+                "Je vois que vous êtes assuré pour le rappatriement et le dépannage de votre véhicule. Pouvez-vous me donner votre localisation ? Je vais vous envoyez une dépanneuse !\n",
+                "Google me dit que je suis sur la route de Saint Jean d Angely, D650, juste avant le rond point qui coupe la route de Niort et D Aiffres.\n",
+                "Est-ce que vous avez un garage préféré dans la région ?\n",
+                "Je ne suis pas d ici, donc je n ai pas de préférences. Le moins cher si possible.\n",
+                "Je vois qu avec votre offre MACIF avantage vous pouvez avoir une réduction au garage Dupont Reunault de Niort cela vous convient ?\n",
+                "Heu, oui faisons cela. Mais pour le mariage de ma soeur à Bordeaux, j ai le droit à un véhicule de remplacement pour y aller ?\n",
+                "Vous n êtes pas couvert pour le prêt de véhicule, la meilleure proposition pour vous serait l offre de location de véhicule pour 50€ par jour.\n",
+                "D accord, pour la voiture de location je peux la rendre directement à Bordeaux ?\n",
+                "Oui bien sur, le dépanneur vous déposera au point de location pour que vous puissiez partir avec votre voiture de prêt. Pour le suivi de votre véhicule et l avancement du sinistre, comment voulez vous être informé ? Par l application, les sms ou par téléphone ?\n",
+                "Je préfère les sms et je voudrais avoir des notifications dès qu il y a des informations sur l avancement des travaux sur mon véhicule.\n",
+                "Ok très bien. Je vous enverrais toutes les infos par sms. Vous avez des questions ?\n",
+                "Oui pour la voiture de location que vous me prêter, je n ai pas l adresse pour la rendre à Bordeaux. Vous pouvez m envoyer les informations pour la rendre ?\n",
+                "Oui, c est au 3 rue de la Broche à Bordeaux, je vous envoie cette information tout de suite par sms.\n",
+                "C est bon j ai reçu les infos. Je vous remercie pour la voiture. Merci à vous et bonne journée !\n",
+                "Bonne journée Madame !"
+            ],
+            "ents": [
+                [
+                [
+                    "Bonjour !",
+                    0,
+                    9,
+                    "MISC"
+                ],
+                [
+                    "mariage",
+                    123,
+                    130,
+                    "EVENEMENT_RARE"
+                ]
+                ],
+                [
+                [
+                    "fumée",
+                    87,
+                    92,
+                    "PANNE_M"
+                ],
+                [
+                    "fumée",
+                    186,
+                    191,
+                    "PANNE_M"
+                ]
+                ],
+                [
+                [
+                    "EH 389 KW",
+                    46,
+                    55,
+                    "MISC"
+                ]
+                ],
+                [],
+                [],
+                [
+                [
+                    "Google",
+                    0,
+                    6,
+                    "ORG"
+                ],
+                [
+                    "Saint Jean d Angely",
+                    42,
+                    61,
+                    "LOC"
+                ],
+                [
+                    "D650",
+                    63,
+                    67,
+                    "LOC"
+                ],
+                [
+                    "Niort",
+                    117,
+                    122,
+                    "LOC"
+                ],
+                [
+                    "D Aiffres",
+                    126,
+                    135,
+                    "PER"
+                ]
+                ],
+                [
+                [
+                    "pas de préférences",
+                    35,
+                    53,
+                    "GARAGE_AUTRES"
+                ],
+                [
+                    "moins cher",
+                    58,
+                    68,
+                    "PRIX_BAS"
+                ]
+                ],
+                [
+                [
+                    "mariage",
+                    36,
+                    43,
+                    "EVENEMENT_RARE"
+                ],
+                [
+                    "Bordeaux",
+                    58,
+                    66,
+                    "LOC"
+                ]
+                ],
+                [
+                [
+                    "Bordeaux",
+                    70,
+                    78,
+                    "LOC"
+                ]
+                ],
+                [
+                [
+                    "sms",
+                    15,
+                    18,
+                    "COMM_SMS"
+                ],
+                [
+                    "notifications dès qu il y a",
+                    44,
+                    71,
+                    "FREQ_ELEVE"
+                ]
+                ],
+                [
+                [
+                    "Bordeaux",
+                    91,
+                    99,
+                    "LOC"
+                ]
+                ],
+                [
+                [
+                    "C",
+                    0,
+                    1,
+                    "MISC"
+                ]
+                ]
+            ],
+            "sentiments": [
+                0,
+                0,
+                0,
+                0.20000000298023224,
+                0.699999988079071,
+                -0.4000000059604645,
+                -0.20000000298023224,
+                0.30000001192092896,
+                -0.10000000149011612,
+                -0.699999988079071,
+                0,
+                0.699999988079071
+            ],
+            "reponse_direct": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "Vous pouvez proposer :\n    - Un garage agrée avec la réduction assureur pour la réparation\n    - Un garage constructeur avec la réduction assureur pour la réparation\n    ",
+                "Vous pouvez proposer :\n    - Une location d'un véhicule pour finir le trajet\n    ",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "reponse_indirect": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "Vous pouvez proposer :\n    - Un garage agrée avec la réduction assureur pour l'entretien\n    - Un garage constructeur avec la réduction assureur pour l'entretien\n    ",
+                "Vous pouvez proposer :\n    - Une assurance exceptionnelle pour les déplacements importants\n    - Un service de location de véhicule partenaire pour des trajets importants\n    ",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "profil": {
+                "EVENEMENT": "EVENEMENT_RARE",
+                "PANNE": "PANNE_M",
+                "GARAGE": "GARAGE_AUTRES",
+                "PRIX": "PRIX_BAS",
+                "COMM": "COMM_SMS",
+                "FREQ": "FREQ_ELEVE"
+            }
+        }
+        console.log(result);
+        jQuery(document).ready(function(){
+            jQuery.ajax('api/service_demo', {
+                type: 'GET',
+                success: function(data) {
+                    result = data;
+                }
+            })
+        });
+        var profil = {
+            "EVENEMENT_RARE": "Evènement rare/spécial",
+            "PANNE_M": "Panne moteur",
+            "GARAGE_AUTRES": "Garage autre",
+            "PRIX_BAS": "Econome",
+            "COMM_SMS": "Communication par sms",
+            "FREQ_ELEVE": "Fréquence d'information élévé"
+        }
+
+        var action_direct_num = 0
+        $.each(result.text, function(i, text){
+            var is_client = (i%2 === 1)
+            var template
+
+            if (is_client) {
+                template = $('.client.template').clone().removeClass('template');
+                var ents = result['ents'][(i-1)/2]
+                text_offset = 0;
+                $.each(ents, function(j, ent){
+                    action_direct_num ++;
+                    var tag = '<span class="mdl-chip"><span class="mdl-chip__text">[' + ent[3] + ']</span></span>';
+                    var tag_length = tag.length;
+                    text = text.substr(0, ent[1] + text_offset) + '<mark>' + tag + text.substr(ent[1] + text_offset, ent[2] - ent[1]) + '</mark>' + text.substr(ent[2] + text_offset)
+                    text_offset += 13 + tag_length;
+
+                    // détection d'actions
+                    console.log(action_direct_num, result['reponse_direct']);
+                    if (result['reponse_direct'][action_direct_num]) {
+                        var action_template = $('.proposition.template').clone().removeClass('template');
+                        action_template.find('.proposition_title').html(result['reponse_direct'][action_direct_num].replace(/\n/g, '<br/>'));
+                        action_template.find('label').attr('for', 'checkbox-'+action_direct_num);
+                        action_template.find('input').prop('id', 'checkbox-'+action_direct_num);
+                        $('#propositions').append(action_template);
+                        action_template.show();
+                    }
+                });
+            } else {
+                template = $('.assist.template').clone().removeClass('template');
+            }
+            template.html(text)
+            $('#messages').append(template)
+            template.show();
+        })
+    </script>
+</body>
+</html>
